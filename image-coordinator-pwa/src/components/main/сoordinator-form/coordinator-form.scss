@@ -1,0 +1,68 @@
+.content-center {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.content-center-auto {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.content-center-auto > *,
+.content-center > * {
+  grid-column-start: 2;
+}
+
+.size-title {
+  display: block;
+}
+
+.custom-control {
+  display: inline-block;
+}
+
+.checkboxgroup {
+  display: inline-block;
+  text-align: center;
+}
+.checkboxgroup label {
+  display: block;
+}
+
+.checkboxes {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.radio-icon {
+  font-size: 3.5rem;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.button {
+  display: inline-block;
+}
+
+.button_edit {
+  text-align: right;
+}
+
+.white {
+  color: #fff;
+}
+
+.img-container > img {
+  max-width: 90%;
+}
+
+canvas {
+  border: 1px solid rgba(235, 229, 229, 0.548);
+}
+
+canvas:hover {
+  cursor: crosshair;
+}
