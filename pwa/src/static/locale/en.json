@@ -1,0 +1,49 @@
+{
+  "name": "English (US)",
+  "short": "en",
+  "contents": {
+    "nav": {
+      "issues": "Issues",
+      "sourceCode": "Source Code"
+    },
+    "main": {
+      "uploadForm": {
+        "title": "Load Your Image",
+        "note": "The image must have the correct extension and resolution.",
+        "uploadAreaCap": "",
+        "uploadInput": {
+          "areaCap": "Drag and drop an image here or click",
+          "removeBtnCap": "Remove"
+        }
+      },
+      "propsForm": {
+        "title": "Specify Properties",
+        "imageSizeBlock": {
+          "title": "Image Size",
+          "note": "Do not change if you want to save the natural size",
+          "width": "Width (px)",
+          "height": "Heigth (px)"
+        },
+        "selectionAreaShapeBlock": {
+          "title": "Shape of the Selection Area",
+          "note": "Choose one of three options"
+        }
+      },
+      "coordinatePickerForm": {
+        "title": "Coords",
+        "note": "Automatically calculated for specified resolution",
+        "lastCoords": "Last Coords",
+        "allCoords": "All Coords"
+      },
+      "buttons": {
+        "goNext": "Go Next",
+        "next": "Next",
+        "cancel": "Cancel",
+        "edit": "Edit",
+        "undo": "Undo",
+        "redo": "Redo",
+        "clear": "Clear"
+      }
+    }
+  }
+}
