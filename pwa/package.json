@@ -9,11 +9,15 @@
     "mdbreact": "^4.12.0",
     "node-sass": "^4.11.0",
     "react": "^16.8.6",
+    "react-alert": "^5.5.0",
+    "react-alert-template-basic": "^1.0.0",
+    "react-alert-template-oldschool-dark": "^1.0.1",
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.8.4",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.8",
-    "react-spring": "^9.0.0-beta.1"
+    "react-spring": "^9.0.0-beta.1",
+    "react-transition-group": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -20,7 +20,7 @@
         "title": "Specify Properties",
         "imageSizeBlock": {
           "title": "Image Size",
-          "note": "Do not change if you want to save the natural size",
+          "note": "Do not change if you want to keep the original proportions",
           "width": "Width (px)",
           "height": "Heigth (px)"
         },
@@ -33,7 +33,8 @@
         "title": "Coords",
         "note": "Automatically calculated for specified resolution",
         "lastCoords": "Last Coords",
-        "allCoords": "All Coords"
+        "allCoords": "All Coords",
+        "copyMsg": "Copied"
       },
       "buttons": {
         "goNext": "Go Next",

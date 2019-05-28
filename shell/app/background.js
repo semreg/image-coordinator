@@ -101,168 +101,124 @@ module.exports = {"name":"development","description":"Add here any environment s
 /*!***************************!*\
   !*** ./src/background.js ***!
   \***************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! path */ "path");
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! url */ "url");
-/* harmony import */ var url__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(url__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! electron */ "electron");
-/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(electron__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _menu_dev_menu_template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./menu/dev_menu_template */ "./src/menu/dev_menu_template.js");
-/* harmony import */ var _menu_edit_menu_template__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./menu/edit_menu_template */ "./src/menu/edit_menu_template.js");
-/* harmony import */ var _helpers_window__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./helpers/window */ "./src/helpers/window.js");
-/* harmony import */ var env__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! env */ "./config/env_development.json");
-var env__WEBPACK_IMPORTED_MODULE_6___namespace = /*#__PURE__*/__webpack_require__.t(/*! env */ "./config/env_development.json", 1);
-// This is main process of Electron, started as first thing when your
-// app starts. It runs through entire life of your application.
-// It doesn't have any windows which you can see on screen, but we can open
-// window from here.
-
-
-
-
-
- // Special module holding environment variables which you declared
-// in config/env_xxx.json file.
-
-
-
-const setApplicationMenu = () => {
-  const menus = [_menu_edit_menu_template__WEBPACK_IMPORTED_MODULE_4__["editMenuTemplate"]];
-
-  if (env__WEBPACK_IMPORTED_MODULE_6__.name !== 'production') {
-    menus.push(_menu_dev_menu_template__WEBPACK_IMPORTED_MODULE_3__["devMenuTemplate"]);
-  }
-
-  electron__WEBPACK_IMPORTED_MODULE_2__["Menu"].setApplicationMenu(electron__WEBPACK_IMPORTED_MODULE_2__["Menu"].buildFromTemplate(menus));
-}; // Save userData in separate folders for each environment.
-// Thanks to this you can use production and development versions of the app
-// on same machine like those are two separate apps.
-
-
-if (env__WEBPACK_IMPORTED_MODULE_6__.name !== 'production') {
-  const userDataPath = electron__WEBPACK_IMPORTED_MODULE_2__["app"].getPath('userData');
-  electron__WEBPACK_IMPORTED_MODULE_2__["app"].setPath('userData', `${userDataPath} (${env__WEBPACK_IMPORTED_MODULE_6__.name})`);
-}
-
-electron__WEBPACK_IMPORTED_MODULE_2__["app"].on('ready', () => {
-  setApplicationMenu();
-  const mainWindow = Object(_helpers_window__WEBPACK_IMPORTED_MODULE_5__["default"])('main', {
-    width: 1366,
-    height: 800
-  });
-  mainWindow.loadURL(url__WEBPACK_IMPORTED_MODULE_1___default.a.format({
-    pathname: path__WEBPACK_IMPORTED_MODULE_0___default.a.join(__dirname, '../../pwa/build/index.html'),
-    protocol: 'file:',
-    slashes: true
-  }));
-
-  if (env__WEBPACK_IMPORTED_MODULE_6__.name === 'development') {
-    mainWindow.openDevTools();
-  }
-});
-electron__WEBPACK_IMPORTED_MODULE_2__["app"].on('window-all-closed', () => {
-  electron__WEBPACK_IMPORTED_MODULE_2__["app"].quit();
-});
-
-/***/ }),
-
-/***/ "./src/helpers/window.js":
-/*!*******************************!*\
-  !*** ./src/helpers/window.js ***!
-  \*******************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AppUpdater; });
 /* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! electron */ "electron");
 /* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(electron__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var fs_jetpack__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! fs-jetpack */ "fs-jetpack");
-/* harmony import */ var fs_jetpack__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(fs_jetpack__WEBPACK_IMPORTED_MODULE_1__);
-// This helper remembers the size and position of your windows (and restores
-// them in that place after app relaunch).
-// Can be used for more than one window, just construct many
-// instances of it and give each different name.
+/* harmony import */ var electron_updater__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! electron-updater */ "electron-updater");
+/* harmony import */ var electron_updater__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(electron_updater__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var electron_log__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! electron-log */ "electron-log");
+/* harmony import */ var electron_log__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(electron_log__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var url__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! url */ "url");
+/* harmony import */ var url__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(url__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! path */ "path");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _menu_dev_menu_template__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./menu/dev_menu_template */ "./src/menu/dev_menu_template.js");
+/* harmony import */ var env__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! env */ "./config/env_development.json");
+var env__WEBPACK_IMPORTED_MODULE_6___namespace = /*#__PURE__*/__webpack_require__.t(/*! env */ "./config/env_development.json", 1);
+/* eslint global-require: off */
+
+/**
+ * This module executes inside of electron's main process. You can start
+ * electron renderer process from here and communicate with the other processes
+ * through IPC.
+ *
+ * When running `yarn build` or `yarn build-main`, this file is compiled to
+ * `./app/main.prod.js` using webpack. This gives us some performance wins.
+ *
+ * @flow
+ */
 
 
-/* harmony default export */ __webpack_exports__["default"] = ((name, options) => {
-  const userDataDir = fs_jetpack__WEBPACK_IMPORTED_MODULE_1___default.a.cwd(electron__WEBPACK_IMPORTED_MODULE_0__["app"].getPath('userData'));
-  const stateStoreFile = `window-state-${name}.json`;
-  const defaultSize = {
-    width: options.width,
-    height: options.height
-  };
-  let state = {};
-  let win;
 
-  const restore = () => {
-    let restoredState = {};
 
-    try {
-      restoredState = userDataDir.read(stateStoreFile, 'json');
-    } catch (err) {// For some reason json can't be read (might be corrupted).
-      // No worries, we have defaults.
+
+
+
+class AppUpdater {
+  constructor() {
+    electron_log__WEBPACK_IMPORTED_MODULE_2___default.a.transports.file.level = 'info';
+    electron_updater__WEBPACK_IMPORTED_MODULE_1__["autoUpdater"].logger = electron_log__WEBPACK_IMPORTED_MODULE_2___default.a;
+    electron_updater__WEBPACK_IMPORTED_MODULE_1__["autoUpdater"].checkForUpdatesAndNotify();
+  }
+
+}
+let mainWindow = null;
+
+const setApplicationMenu = () => {
+  const menus = []; // if (env.name !== 'production') {
+  //   menus.push(devMenuTemplate)
+  // }
+
+  electron__WEBPACK_IMPORTED_MODULE_0__["Menu"].setApplicationMenu(electron__WEBPACK_IMPORTED_MODULE_0__["Menu"].buildFromTemplate(menus));
+};
+
+if (false) {}
+
+if (true) {
+  __webpack_require__(/*! electron-debug */ "electron-debug")();
+}
+
+const installExtensions = async () => {
+  const installer = __webpack_require__(/*! electron-devtools-installer */ "electron-devtools-installer");
+
+  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
+  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
+  return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload))).catch(console.log);
+};
+/**
+ * Add event listeners...
+ */
+
+
+electron__WEBPACK_IMPORTED_MODULE_0__["app"].on('window-all-closed', () => {
+  // Respect the OSX convention of having the application in memory even
+  // after all windows have been closed
+  if (process.platform !== 'darwin') {
+    electron__WEBPACK_IMPORTED_MODULE_0__["app"].quit();
+  }
+});
+electron__WEBPACK_IMPORTED_MODULE_0__["app"].on('ready', async () => {
+  setApplicationMenu();
+
+  if (true) {
+    await installExtensions();
+  }
+
+  mainWindow = new electron__WEBPACK_IMPORTED_MODULE_0__["BrowserWindow"]({
+    show: false,
+    width: 1366,
+    height: 800
+  });
+  mainWindow.loadURL(url__WEBPACK_IMPORTED_MODULE_3___default.a.format({
+    pathname: path__WEBPACK_IMPORTED_MODULE_4___default.a.join(__dirname, './index.html'),
+    protocol: 'file:',
+    slashes: true
+  })); // @TODO: Use 'ready-to-show' event
+  //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
+
+  mainWindow.webContents.on('did-finish-load', () => {
+    if (!mainWindow) {
+      throw new Error('"mainWindow" is not defined');
     }
 
-    return Object.assign({}, defaultSize, restoredState);
-  };
-
-  const getCurrentPosition = () => {
-    const position = win.getPosition();
-    const size = win.getSize();
-    return {
-      x: position[0],
-      y: position[1],
-      width: size[0],
-      height: size[1]
-    };
-  };
-
-  const windowWithinBounds = (windowState, bounds) => {
-    return windowState.x >= bounds.x && windowState.y >= bounds.y && windowState.x + windowState.width <= bounds.x + bounds.width && windowState.y + windowState.height <= bounds.y + bounds.height;
-  };
-
-  const resetToDefaults = () => {
-    const bounds = electron__WEBPACK_IMPORTED_MODULE_0__["screen"].getPrimaryDisplay().bounds;
-    return Object.assign({}, defaultSize, {
-      x: (bounds.width - defaultSize.width) / 2,
-      y: (bounds.height - defaultSize.height) / 2
-    });
-  };
-
-  const ensureVisibleOnSomeDisplay = windowState => {
-    const visible = electron__WEBPACK_IMPORTED_MODULE_0__["screen"].getAllDisplays().some(display => {
-      return windowWithinBounds(windowState, display.bounds);
-    });
-
-    if (!visible) {
-      // Window is partially or fully not visible now.
-      // Reset it to safe defaults.
-      return resetToDefaults();
+    if (process.env.START_MINIMIZED) {
+      mainWindow.minimize();
+    } else {
+      mainWindow.show();
+      mainWindow.focus();
     }
+  });
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  }); // Remove this if your app does not use auto updates
+  // eslint-disable-next-line
 
-    return windowState;
-  };
-
-  const saveState = () => {
-    if (!win.isMinimized() && !win.isMaximized()) {
-      Object.assign(state, getCurrentPosition());
-    }
-
-    userDataDir.write(stateStoreFile, state, {
-      atomic: true
-    });
-  };
-
-  state = ensureVisibleOnSomeDisplay(restore());
-  win = new electron__WEBPACK_IMPORTED_MODULE_0__["BrowserWindow"](Object.assign({}, options, state));
-  win.on('close', saveState);
-  return win;
+  new AppUpdater();
 });
 
 /***/ }),
@@ -305,49 +261,6 @@ const devMenuTemplate = {
 
 /***/ }),
 
-/***/ "./src/menu/edit_menu_template.js":
-/*!****************************************!*\
-  !*** ./src/menu/edit_menu_template.js ***!
-  \****************************************/
-/*! exports provided: editMenuTemplate */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "editMenuTemplate", function() { return editMenuTemplate; });
-const editMenuTemplate = {
-  label: 'Edit',
-  submenu: [{
-    label: 'Undo',
-    accelerator: 'CmdOrCtrl+Z',
-    selector: 'undo:'
-  }, {
-    label: 'Redo',
-    accelerator: 'Shift+CmdOrCtrl+Z',
-    selector: 'redo:'
-  }, {
-    type: 'separator'
-  }, {
-    label: 'Cut',
-    accelerator: 'CmdOrCtrl+X',
-    selector: 'cut:'
-  }, {
-    label: 'Copy',
-    accelerator: 'CmdOrCtrl+C',
-    selector: 'copy:'
-  }, {
-    label: 'Paste',
-    accelerator: 'CmdOrCtrl+V',
-    selector: 'paste:'
-  }, {
-    label: 'Select All',
-    accelerator: 'CmdOrCtrl+A',
-    selector: 'selectAll:'
-  }]
-};
-
-/***/ }),
-
 /***/ "electron":
 /*!***************************!*\
   !*** external "electron" ***!
@@ -359,14 +272,47 @@ module.exports = require("electron");
 
 /***/ }),
 
-/***/ "fs-jetpack":
-/*!*****************************!*\
-  !*** external "fs-jetpack" ***!
-  \*****************************/
+/***/ "electron-debug":
+/*!*********************************!*\
+  !*** external "electron-debug" ***!
+  \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = require("fs-jetpack");
+module.exports = require("electron-debug");
+
+/***/ }),
+
+/***/ "electron-devtools-installer":
+/*!**********************************************!*\
+  !*** external "electron-devtools-installer" ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("electron-devtools-installer");
+
+/***/ }),
+
+/***/ "electron-log":
+/*!*******************************!*\
+  !*** external "electron-log" ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("electron-log");
+
+/***/ }),
+
+/***/ "electron-updater":
+/*!***********************************!*\
+  !*** external "electron-updater" ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("electron-updater");
 
 /***/ }),
 

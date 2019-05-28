@@ -76,9 +76,11 @@ function ImageCanvas ({
         ? (
           <Poly
             coords={coords}
+            coordsHistory={coordsHistory}
             imageToDraw={imageToDraw}
             canvasProps={canvasProps}
             setCoords={setCoords}
+            setCoordsHistory={setCoordsHistory}
             setCurrentCoords={setCurrentCoords}
           />
         )

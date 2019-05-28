@@ -1,0 +1,10 @@
+publish:
+    provider: github
+    token: 11c36d1a8c3d5db2acdc8d1ca4967d024afc2192
+appId: com.image-coordinator
+files:
+    - build/**/*
+    - node_modules/**/*"
+directories:
+    buildResources: assets
+productName: image-coordinator

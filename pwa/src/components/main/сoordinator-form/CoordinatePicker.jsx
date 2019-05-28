@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import { element, object } from 'prop-types'
 import { MDBBtn, MDBContainer, MDBRow, MDBCol, MDBInput } from 'mdbreact'
+import { useAlert } from 'react-alert'
 import ImageCanvas from './ImageCanvas'
 import getRadius from '../../../javascripts/getRadius'
 import Animated from '../../other/Animated'
@@ -33,6 +34,8 @@ function CoordinatePicker ({ children, image, imageProps }) {
 
   const context = useContext(localeContext)
 
+  const alert = useAlert()
+
   useEffect(() => {
     setformContainerProps({
       width: formContainer.current.clientWidth,
@@ -50,7 +53,7 @@ function CoordinatePicker ({ children, image, imageProps }) {
               `${
                 coords
                   .map(xy => getNaturalCoords(xy, canvasProps, imageProps))
-                  .join(',')
+                  .join(', ')
               }`
             )
             : ''
@@ -94,6 +97,10 @@ function CoordinatePicker ({ children, image, imageProps }) {
         setCoordsHistory(currentCoordsHistory)
         setCoords(coordsHistory.slice(0, -1).pop())
         setRemovedCoords([...removedCoords, coords])
+      } else {
+        setCoordsHistory([])
+        setRemovedCoords([...removedCoords, coords])
+        setCoords([])
       }
     }
   }
@@ -125,8 +132,14 @@ function CoordinatePicker ({ children, image, imageProps }) {
     ]
   )
 
-  const { title, note, lastCoords, allCoords } = context.content.contents.main.coordinatePickerForm
+  const { title, note, lastCoords, allCoords, copyMsg } = context.content.contents.main.coordinatePickerForm
   const { undo: undoBtnCap, redo: redoBtnCap, clear } = context.content.contents.main.buttons
+
+  const copyCoords = e => {
+    e.target.select()
+    document.execCommand('copy')
+    alert.success(copyMsg)
+  }
 
   return (
     <Animated>
@@ -173,6 +186,8 @@ function CoordinatePicker ({ children, image, imageProps }) {
                         error="wrong"
                         success="right"
                         value={`${currentCoords ? `${getNaturalCoords(currentCoords, canvasProps, imageProps)}` : ''}`}
+                        onClick={copyCoords}
+                        className='pointer'
                       />
                     )
                     : ''
@@ -185,14 +200,15 @@ function CoordinatePicker ({ children, image, imageProps }) {
                     validate
                     error="wrong"
                     success="right"
-                    className='text'
+                    className='text pointer'
                     value={coordsToDisplay}
+                    onClick={copyCoords}
                   />
                 </div>
                 <div className="control-buttons">
                   <MDBBtn
                     onClick={undo}
-                    className={`uppercase  ${(coords.length < 1 || (imageProps.selectionShape !== 'poly' && coordsHistory.length < 2)) ? 'disabled' : ''}`}
+                    className={`uppercase  ${(coords.length < 1 || (imageProps.selectionShape !== 'poly' && coordsHistory.length < 1)) ? 'disabled' : ''}`}
                   >
                     <i className="fas fa-undo"></i> {undoBtnCap}
                   </MDBBtn>

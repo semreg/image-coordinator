@@ -1,56 +1,118 @@
-// This is main process of Electron, started as first thing when your
-// app starts. It runs through entire life of your application.
-// It doesn't have any windows which you can see on screen, but we can open
-// window from here.
+/* eslint global-require: off */
 
-import path from 'path'
+/**
+ * This module executes inside of electron's main process. You can start
+ * electron renderer process from here and communicate with the other processes
+ * through IPC.
+ *
+ * When running `yarn build` or `yarn build-main`, this file is compiled to
+ * `./app/main.prod.js` using webpack. This gives us some performance wins.
+ *
+ * @flow
+ */
+import { app, BrowserWindow, Menu } from 'electron'
+import { autoUpdater } from 'electron-updater'
+import log from 'electron-log'
 import url from 'url'
-import { app, Menu } from 'electron'
+import path from 'path'
 import { devMenuTemplate } from './menu/dev_menu_template'
-import { editMenuTemplate } from './menu/edit_menu_template'
-import createWindow from './helpers/window'
-
-// Special module holding environment variables which you declared
-// in config/env_xxx.json file.
 import env from 'env'
 
-const setApplicationMenu = () => {
-  const menus = [editMenuTemplate]
-  if (env.name !== 'production') {
-    menus.push(devMenuTemplate)
+export default class AppUpdater {
+  constructor () {
+    log.transports.file.level = 'info'
+    autoUpdater.logger = log
+    autoUpdater.checkForUpdatesAndNotify()
   }
+}
+
+let mainWindow = null
+
+const setApplicationMenu = () => {
+  const menus = []
+  // if (env.name !== 'production') {
+  //   menus.push(devMenuTemplate)
+  // }
   Menu.setApplicationMenu(Menu.buildFromTemplate(menus))
 }
 
-// Save userData in separate folders for each environment.
-// Thanks to this you can use production and development versions of the app
-// on same machine like those are two separate apps.
-if (env.name !== 'production') {
-  const userDataPath = app.getPath('userData')
-  app.setPath('userData', `${userDataPath} (${env.name})`)
+if (process.env.NODE_ENV === 'production') {
+  const sourceMapSupport = require('source-map-support')
+  sourceMapSupport.install()
 }
 
-app.on('ready', () => {
+if (
+  process.env.NODE_ENV === 'development' ||
+  process.env.DEBUG_PROD === 'true'
+) {
+  require('electron-debug')()
+}
+
+const installExtensions = async () => {
+  const installer = require('electron-devtools-installer')
+  const forceDownload = !!process.env.UPGRADE_EXTENSIONS
+  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS']
+
+  return Promise.all(
+    extensions.map(name => installer.default(installer[name], forceDownload))
+  ).catch(console.log)
+}
+
+/**
+ * Add event listeners...
+ */
+
+app.on('window-all-closed', () => {
+  // Respect the OSX convention of having the application in memory even
+  // after all windows have been closed
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
+
+app.on('ready', async () => {
   setApplicationMenu()
 
-  const mainWindow = createWindow('main', {
+  if (
+    process.env.NODE_ENV === 'development' ||
+    process.env.DEBUG_PROD === 'true'
+  ) {
+    await installExtensions()
+  }
+
+  mainWindow = new BrowserWindow({
+    show: false,
     width: 1366,
     height: 800
   })
 
   mainWindow.loadURL(
     url.format({
-      pathname: path.join(__dirname, '../../pwa/build/index.html'),
+      pathname: path.join(__dirname, './index.html'),
       protocol: 'file:',
       slashes: true
     })
   )
 
-  if (env.name === 'development') {
-    mainWindow.openDevTools()
-  }
-})
+  // @TODO: Use 'ready-to-show' event
+  //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
+  mainWindow.webContents.on('did-finish-load', () => {
+    if (!mainWindow) {
+      throw new Error('"mainWindow" is not defined')
+    }
+    if (process.env.START_MINIMIZED) {
+      mainWindow.minimize()
+    } else {
+      mainWindow.show()
+      mainWindow.focus()
+    }
+  })
 
-app.on('window-all-closed', () => {
-  app.quit()
+  mainWindow.on('closed', () => {
+    mainWindow = null
+  })
+
+  // Remove this if your app does not use auto updates
+  // eslint-disable-next-line
+  new AppUpdater();
 })

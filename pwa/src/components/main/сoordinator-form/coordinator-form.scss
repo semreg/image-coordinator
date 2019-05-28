@@ -25,6 +25,15 @@
   display: inline-block;
   text-align: center;
 }
+
+.checkboxgroup:hover {
+  cursor: pointer;
+
+  label {
+    cursor: pointer;
+  }
+}
+
 .checkboxgroup label {
   display: block;
 }
@@ -69,4 +78,8 @@ canvas:hover {
 
 .uppercase {
   text-transform: uppercase
+}
+
+.pointer:hover {
+  cursor: pointer;
 }
