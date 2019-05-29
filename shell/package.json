@@ -2,7 +2,7 @@
   "name": "image-coordinator-electron",
   "productName": "Image Coordinator",
   "description": "Image Coordinator Electorn-based Desktop App",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "author": "Vlad `Semreg` Chabaniuk <vchabanik@yahoo.com>",
   "homepage": "http://semreg.me.com",
@@ -24,10 +24,10 @@
     "start": "node build/start.js",
     "release": "webpack --config=build/webpack.app.config.js --env=production && electron-builder",
     "package": "yarn build && electron-builder build --publish never",
-    "package-all": "yarn build && electron-builder build -mwl",
+    "package-all": "electron-builder --platform all --publish always",
     "package-ci": "yarn postinstall && yarn build && electron-builder --publish always",
     "package-linux": "yarn build && electron-builder build --linux",
-    "package-win": "yarn build && electron-builder build --win --x64"
+    "package-win": "electron-builder --platform win --publish always"
   },
   "dependencies": {
     "electron-debug": "^3.0.0",

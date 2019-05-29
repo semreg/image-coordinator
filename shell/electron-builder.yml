@@ -1,6 +1,6 @@
 publish:
     provider: github
-    token: 11c36d1a8c3d5db2acdc8d1ca4967d024afc2192
+    token: 2a1ffadc0fb6dd45a8bcac5b2f2490b44b4f3d24
 appId: com.image-coordinator
 files:
     - build/**/*

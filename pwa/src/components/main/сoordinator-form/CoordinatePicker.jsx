@@ -53,7 +53,7 @@ function CoordinatePicker ({ children, image, imageProps }) {
               `${
                 coords
                   .map(xy => getNaturalCoords(xy, canvasProps, imageProps))
-                  .join(', ')
+                  .join(',')
               }`
             )
             : ''
