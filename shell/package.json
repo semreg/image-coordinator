@@ -2,10 +2,10 @@
   "name": "image-coordinator-electron",
   "productName": "Image Coordinator",
   "description": "Image Coordinator Electorn-based Desktop App",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "author": "Vlad `Semreg` Chabaniuk <vchabanik@yahoo.com>",
-  "homepage": "http://semreg.me.com",
+  "homepage": "http://semreg.me",
   "main": "app/background.js",
   "build": {
     "appId": "com.example.image-coordinator",
