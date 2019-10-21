@@ -29,4 +29,3 @@ $ yarn start
 
 * **Semreg** - *Author* - [Semreg](https://gitlab.com/Semreg)
 * **XzOy** - *Logo design* - [XzOy](https://gitlab.com/xzoy)
-
