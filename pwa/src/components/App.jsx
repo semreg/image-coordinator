@@ -1,4 +1,3 @@
-import { hot } from 'react-hot-loader/root'
 import React from 'react'
 import Layout from './layout/Layout'
 import { BrowserRouter as Router } from 'react-router-dom'
@@ -28,4 +27,4 @@ function App (props) {
   )
 }
 
-export default hot(App)
+export default App
