@@ -7,5 +7,4 @@ app.use(express.static(path.join(__dirname, 'pwa/build')))
 
 app.use('*', (req, res) => res.sendFile(path.join(__dirname, 'pwa/build/index.html')))
 
-app.listen(3000
-  )
+app.listen(3000)
