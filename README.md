@@ -5,6 +5,9 @@ Image Coordinator is a cross-platform tool for getting area coordinates, built o
 
 # Usage
 
+## Onlone
+Try it out now! [Click Here](https://image-coordinator.herokuapp.com)
+
 ## Installing
 Before you compile the app, make sure you have [Node](https://nodejs.org/) and [Yarn](https://yarnpkg.org/) installed.
 
