@@ -1,0 +1,16 @@
+{
+  "name": "image-coordinator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Semreg/image-coordinator.git",
+  "author": "Semreg <vchabaniuk@yahoo.com>",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "cd pwa; npm install && npm run build",
+    "start": "node app"
+  },
+  "start": "node app",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
